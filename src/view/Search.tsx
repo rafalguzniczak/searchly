@@ -1,11 +1,13 @@
-import React, { ChangeEvent, useEffect, useState } from "react";
+import React, { ChangeEvent, useContext, useEffect, useState } from "react";
 import getRepositoryResult from "../helpers/getRepositoryResult";
+import { RepositoriesContext } from "../RepositoriesContextProvider";
 
 const getApiUrl = (phrase: string) =>
   `https://api.github.com/search/repositories?q=${phrase}&sort=stars&order=desc`;
 
 const Search = (): JSX.Element => {
   const [searchPhrase, setSearchPhrase] = useState("");
+  const repositoriesContext = useContext(RepositoriesContext);
 
   useEffect(() => {
     if (searchPhrase.trim().length > 3) {
@@ -22,17 +24,17 @@ const Search = (): JSX.Element => {
           throw new Error("Fetch failed.");
         }
       })
-      .then((data: GitHubResponse) => {
-        const repositoryResults: RepositoryResult[] = data.items.map(getRepositoryResult);
-        return repositoryResults;
-      })
-      .catch((error: Error) => console.log("\n\nUps...", error)); // TODO: handle errors like a boss
+      .then((data: GitHubResponse): RepositoryResult[] =>
+        data.items.map(getRepositoryResult)
+      )
+      .then((repositoryResults) =>
+        repositoriesContext.setResults(repositoryResults)
+      )
+      .catch((error: Error) => console.log("Ups...", error)); // TODO: handle errors like a boss
   };
 
-  const handleChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
-    const value = event.target.value;
-    setSearchPhrase(value);
-  };
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement>): void =>
+    setSearchPhrase(event.target.value);
 
   return (
     <div className="search">
