@@ -1,0 +1,23 @@
+.search {
+  display: flex;
+  flex-direction: column;
+
+  span {
+    font-size: 24px;
+    font-weight: 300;
+    padding-bottom: 16px;
+  }
+
+  &__input {
+    height: 40px;
+    padding: 8px;
+    font-size: 24px;
+    border: 2px solid #16a085;
+
+    &:focus {
+      border: 2px solid #126454;
+      outline: 1px dashed #126454;
+      outline-offset: 1px;
+    }
+  }
+}
