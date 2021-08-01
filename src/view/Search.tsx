@@ -7,6 +7,9 @@ const getApiUrl = (phrase: string) =>
 
 const Search = (): JSX.Element => {
   const [searchPhrase, setSearchPhrase] = useState("");
+  const [isError, setIsError] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+
   const repositoriesContext = useContext(RepositoriesContext);
 
   useEffect(() => {
@@ -16,6 +19,10 @@ const Search = (): JSX.Element => {
   }, [searchPhrase]);
 
   const fetchResults = async () => {
+    setIsError(false);
+    setIsLoading(true);
+    repositoriesContext.setResults([]);
+
     await fetch(getApiUrl(searchPhrase), { cache: "force-cache" })
       .then((response) => {
         if (response.ok) {
@@ -30,7 +37,10 @@ const Search = (): JSX.Element => {
       .then((repositoryResults) =>
         repositoriesContext.setResults(repositoryResults)
       )
-      .catch((error: Error) => console.log("Ups...", error)); // TODO: handle errors like a boss
+      .catch((error: Error) => setIsError(true))
+      .finally(() => {
+        setIsLoading(false);
+      });
   };
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>): void =>
@@ -43,10 +53,20 @@ const Search = (): JSX.Element => {
         type="text"
         className="search__input"
         aria-label="Repository name"
-        aria-describedby="hint"
+        aria-describedby="hint error"
         onChange={handleChange}
         value={searchPhrase}
       />
+      {isError && (
+        <span id="error">
+          There is a problem with the connection. Please try again later.
+        </span>
+      )}
+      {isLoading && (
+        <div className="loading-wrapper">
+          <div className="loading"></div>
+        </div>
+      )}
     </div>
   );
 };
