@@ -14,7 +14,8 @@
     font-size: 24px;
     border: 2px solid #16a085;
 
-    &:focus {
+    &:focus,
+    &:active {
       border: 2px solid #126454;
       outline: 1px dashed #126454;
       outline-offset: 1px;
