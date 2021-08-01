@@ -11,12 +11,12 @@ const Search = (): JSX.Element => {
 
   useEffect(() => {
     if (searchPhrase.trim().length > 3) {
-      fetchResults();
+      fetchResults(); // TODO: Add debounce
     }
   }, [searchPhrase]);
 
   const fetchResults = async () => {
-    await fetch(getApiUrl(searchPhrase))
+    await fetch(getApiUrl(searchPhrase), { cache: "force-cache" })
       .then((response) => {
         if (response.ok) {
           return response.json();

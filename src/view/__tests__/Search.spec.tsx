@@ -1,6 +1,6 @@
 import React from "react";
 import { mount } from "enzyme";
-import Search from "../view/Search";
+import Search from "../Search";
 
 describe("Search component", () => {
   it("should handle input change", () => {
