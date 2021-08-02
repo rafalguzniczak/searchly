@@ -32,13 +32,13 @@ const Sorting = (): JSX.Element => {
   return (
     <div className="sort">
       Sort by:
-      <select value={sorting} onChange={changeSorting}>
+      <select value={sorting} onChange={changeSorting} aria-label="sort by">
         <option value="name">name</option>
         <option value="owner">owner</option>
         <option value="stars">stars</option>
         <option value="createdAt">created at</option>
       </select>
-      <select value={order} onChange={changeOrder}>
+      <select value={order} onChange={changeOrder} aria-label="sort direction">
         <option value="ASC">ASC</option>
         <option value="DESC">DESC</option>
       </select>

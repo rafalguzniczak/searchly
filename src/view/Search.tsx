@@ -1,12 +1,14 @@
 import React, { ChangeEvent, useContext, useEffect, useState } from "react";
 import getRepositoryResult from "../helpers/getRepositoryResult";
+import useQuery from "../helpers/useQuery";
 import { RepositoriesContext } from "../RepositoriesContextProvider";
 
 const getApiUrl = (phrase: string) =>
   `https://api.github.com/search/repositories?q=${phrase}&sort=stars&order=desc`;
 
 const Search = (): JSX.Element => {
-  const [searchPhrase, setSearchPhrase] = useState("");
+  const { getQuery } = useQuery();
+  const [searchPhrase, setSearchPhrase] = useState(getQuery("phrase") || "");
   const [isError, setIsError] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 

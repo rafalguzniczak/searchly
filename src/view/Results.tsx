@@ -2,14 +2,14 @@ import React, { useContext } from "react";
 import { RepositoriesContext } from "../RepositoriesContextProvider";
 
 const formatDate = (date: string): string =>
-new Date(date).toLocaleDateString("en-GB", {
-  year: "numeric",
-  month: "numeric",
-  day: "numeric",
-});
+  new Date(date).toLocaleDateString("en-GB", {
+    year: "numeric",
+    month: "numeric",
+    day: "numeric",
+  });
 
 const Results = (): JSX.Element => {
-  const repositoriesContext = useContext(RepositoriesContext); 
+  const repositoriesContext = useContext(RepositoriesContext);
 
   if (repositoriesContext.results.length === 0) return null;
 
