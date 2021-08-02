@@ -1,0 +1,20 @@
+.header {
+  padding: 16px 0;
+  margin-bottom: 32px;
+
+  &__brand {
+    margin: 0;
+    font-weight: 500;
+    color: #1abc9c;
+
+    span {
+      color: #16a085;
+    }
+  }
+}
+
+@media screen and (max-width: 960px) {
+  .header {
+    padding: 16px 8px;
+  }
+}
